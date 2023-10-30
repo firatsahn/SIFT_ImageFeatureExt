@@ -1,0 +1,16 @@
+.image-box {
+    margin: 50px;
+    border: 2px solid black;
+}
+
+.button-container {
+    text-align: center;
+}
+
+.button-container button {
+    margin: 15px; 
+}
+
+h2 {
+    text-align: center;
+}
