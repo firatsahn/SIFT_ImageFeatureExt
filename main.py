@@ -30,14 +30,17 @@ def gen_frames(detect_frame): # Generate frames, detect keypoints, and compute d
             if frame is not None:
                 Query = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
                 keypoints_2, descriptors_2 = sift.detectAndCompute(Query, None) #training for real-time frame
-                #todo change matchers method
+    
+                matcher = cv2.DescriptorMatcher_create(cv2.DescriptorMatcher_FLANNBASED)
                 if descriptors_2 is not None and descriptors_1 is not None:
-                    matcher = cv2.BFMatcher() # Initialize a Brute-Force Matcher
-                    matches = matcher.knnMatch(descriptors_1, descriptors_2, k=2) #Find k-nearest matches
+                    knn_matches = matcher.knnMatch(descriptors_1, descriptors_2, 2)
 
+                    # matcher = cv2.BFMatcher() # Initialize a Brute-Force Matcher
+                    # matches = matcher.knnMatch(descriptors_1, descriptors_2, k=2) #Find k-nearest matches
 
+                    img_matches = np.empty((0, 0))
                     good_matches = []
-                    for m, n in matches:
+                    for m, n in knn_matches:
                         if m.distance < 0.75 * n.distance: # Filter and keep good matches
                             good_matches.append(m)
                     
