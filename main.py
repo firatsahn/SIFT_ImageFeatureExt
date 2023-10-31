@@ -8,7 +8,7 @@ import os
 app = Flask(__name__)
 
 
-sift = cv2.SIFT_create() #Initialize SIFT algorithm
+sift = cv2.xfeatures2d.SIFT_create() #Initialize SIFT algorithm
 MIN_MATCH_COUNT = 30  #Minimum number of matches
 
 trainingImg_path = "img/2.jpeg"
@@ -28,7 +28,9 @@ def gen_frames(detect_frame): # Generate frames, detect keypoints, and compute d
         if streaming:
             ret, frame = video_capture.read()
             if frame is not None:
-                keypoints_2, descriptors_2 = sift.detectAndCompute(frame, None) #training for real-time frame
+                Query = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+                keypoints_2, descriptors_2 = sift.detectAndCompute(Query, None) #training for real-time frame
+                #todo change matchers method
                 if descriptors_2 is not None and descriptors_1 is not None:
                     matcher = cv2.BFMatcher() # Initialize a Brute-Force Matcher
                     matches = matcher.knnMatch(descriptors_1, descriptors_2, k=2) #Find k-nearest matches
