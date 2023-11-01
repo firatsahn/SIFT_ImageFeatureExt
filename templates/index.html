@@ -1,32 +1,30 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
     <title>SIFT - Object Detection</title>
-
-    
-    <link href="{{ url_for('static', filename='design.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   </head>
-
   <body>
-    <h2>Image Feature Extraction - SIFT Algorithm</h2>
+    <header>
+      <h1>Image Feature Extraction - SIFT Algorithm</h1>
+    </header>
 
     <div class="button-container">
       <button id="startButton">Start</button>
       <button id="closeButton">Close</button>
-    </div>  
-    <br>
-    <div class="button-container">
-      <input type="file" id="imageUpload" accept=".jpeg, .jpg, .png">
     </div>
-    <br>
-    
-    
-    <img  class="image-box" id="matchingImage" src="" width="500" height="500">
-    <img  class="image-box" id="cameraFeed" src="" width="500" height="500">
 
-    
+    <div class="button-container">
+      <input type="file" id="imageUpload" class="custom-input" accept=".jpeg, .jpg, .png">
+    </div>
+
+    <div class="image-container">
+      <img class="image-box" id="matchingImage" src="" width="500" height="500">
+      <img class="image-box" id="cameraFeed" src="" width="500" height="500">
+    </div>
+
     <script>
-      var startButton = document.getElementById('startButton');
+              var startButton = document.getElementById('startButton');
       startButton.addEventListener('click', function() {
         fetch('/start_stream')
           .then(response => response.text())
